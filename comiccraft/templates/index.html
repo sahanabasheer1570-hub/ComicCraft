@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ComicCraft AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #12002f, #24005c, #09001c);
+            color: white;
+        }
+
+        header {
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .logo span {
+            color: #ff4ecd;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #ffcc00;
+        }
+
+        .hero p {
+            color: #d5cce5;
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            color: #ddd;
+        }
+
+        textarea,
+        input,
+        select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #5e4a80;
+            background: #160b2d;
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        textarea:focus,
+        input:focus,
+        select:focus {
+            border-color: #ff4ecd;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #ff4ecd, #7c4dff);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,78,205,0.3);
+        }
+
+        .output {
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px dashed #604b80;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .output-content {
+            width: 100%;
+        }
+
+        .comic-title {
+            font-size: 28px;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        .panel-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .panel {
+            min-height: 130px;
+            background: linear-gradient(135deg, #ff4ecd, #5e35b1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .empty {
+            color: #aaa;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #aaa;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media(max-width: 800px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Comic<span>Craft</span> AI</div>
+    <div>✨ AI Comic Generator</div>
+</header>
+
+<section class="hero">
+    <h1>Create Your Own <span>Comic</span></h1>
+
+    <p>
+        Turn your imagination into an exciting comic story.
+        Enter your idea, choose your style and generate comic panels.
+    </p>
+</section>
+
+<div class="container">
+
+    <!-- INPUT -->
+    <div class="card">
+
+        <h2>📝 Create Your Story</h2>
+
+        <label>Comic Title</label>
+        <input
+            type="text"
+            id="title"
+            placeholder="Example: The Super Hero"
+        >
+
+        <label>Your Story / Idea</label>
+
+        <textarea
+            id="story"
+            placeholder="Example: A young boy discovers a magical power and saves his village..."
+        ></textarea>
+
+        <div class="row">
+
+            <div>
+                <label>Genre</label>
+
+                <select id="genre">
+                    <option>Superhero</option>
+                    <option>Adventure</option>
+                    <option>Fantasy</option>
+                    <option>Comedy</option>
+                    <option>Science Fiction</option>
+                    <option>Horror</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Panels</label>
+
+                <select id="panels">
+                    <option value="4">4 Panels</option>
+                    <option value="6">6 Panels</option>
+                    <option value="8">8 Panels</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button onclick="generateComic()">
+            🚀 Generate Comic
+        </button>
+
+    </div>
+
+
+    <!-- OUTPUT -->
+    <div class="card">
+
+        <h2>🎨 Comic Preview</h2>
+
+        <div class="output" id="output">
+
+            <div class="empty">
+                <div style="font-size:50px;">🖼️</div>
+                <br>
+                Your generated comic will appear here.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    © 2026 ComicCraft AI • Create. Imagine. Inspire.
+</footer>
+
+
+<script>
+
+function generateComic() {
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const story =
+        document.getElementById("story").value.trim();
+
+    const genre =
+        document.getElementById("genre").value;
+
+    const panelCount =
+        parseInt(document.getElementById("panels").value);
+
+    const output =
+        document.getElementById("output");
+
+
+    if (!title || !story) {
+
+        alert("Please enter Comic Title and Story!");
+
+        return;
+    }
+
+
+    const sentences = story
+        .split(/[.!?]+/)
+        .map(x => x.trim())
+        .filter(x => x.length > 0);
+
+
+    let panels = "";
+
+    for (let i = 0; i < panelCount; i++) {
+
+        let text;
+
+        if (sentences.length > 0) {
+
+            text =
+                sentences[i % sentences.length];
+
+        } else {
+
+            text = story;
+        }
+
+
+        panels += `
+            <div class="panel">
+                <div>
+                    <div style="font-size:30px; margin-bottom:10px;">
+                        🎬
+                    </div>
+
+                    <div>
+                        Panel ${i + 1}
+                    </div>
+
+                    <p style="margin-top:8px;">
+                        ${text}
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+
+    output.innerHTML = `
+
+        <div class="output-content">
+
+            <div class="comic-title">
+                ${title}
+            </div>
+
+            <p style="color:#bbb; margin-bottom:20px;">
+                Genre: ${genre}
+            </p>
+
+            <div class="panel-container">
+                ${panels}
+            </div>
+
+        </div>
+
+    `;
+}
+
+</script>
+
+</body>
+</html>
